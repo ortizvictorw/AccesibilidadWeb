@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso-Vue</title>
+</head>
+<body>
+    <div id="app">
+        <label for="ancho">Ancho de la imagen</label>
+        <br>
+            <input 
+            aria-label="ancho de la imagen" 
+            id="ancho" 
+            type="range"
+            max="1000"
+            v-model='ancho'
+            >
+        <br>
+            <pre>ANCHO DE LA IMAGEN ==> {{ ancho }}px</pre>
+
+        <br>
+        <br>
+
+        <label for="largo">Largo de la imagen</label>
+        <br>
+            <input 
+            aria-label="ancho de la imagen" 
+            id="largo" 
+            type="range"
+            max="1000"
+            v-model='largo'
+            >
+        <br>
+            <pre>LARGO DE LA IMAGEN ==> {{ largo }}px</pre>
+        <br>
+        <label for="url">Url de la imagen</label>
+        <input 
+        id='url' 
+        aria-label="url" 
+        type="search"
+        v-model='urlCompleta'
+        
+        >
+        <br>
+        <br>
+
+        <label for="categorias">CATEGORIA IMAGEN</label>
+        <select v-model='categoria' id="categorias">
+            <option value="animals">ANIMALES</option>
+            <option value="arch">ARQUITECTURA</option>
+            <option value="nature">NATURALEZA</option>
+            <option value="people">PERSONAS</option>
+            <option value="tech">TECNOLOGIA</option>
+            
+        </select>
+
+        <br>
+        <br>
+
+        <label for="filtro">FILTROS IMAGEN</label>
+        <select  id="filtro" v-model='isfiltro'>
+            <option value="/">SI</option>
+            <option value="">NO</option>  
+        </select>
+
+        <div class="" v-if='isfiltro'>
+            <label for="filtro">FILTROS IMAGEN</label>
+            <select  id="filtro" v-model='filtro'>
+                <option value="grayscale">BLANCO Y NEGRO</option>
+                <option value="sepia">SEPIA</option>  
+            </select>
+        </div>
+
+        <br>
+        <br>
+        <img :src="urlCompleta" alt="">
+        <label for="alt">Alt de la imagen</label>
+        <input v-model="alt" id="alt" type="text">
+        <h2>Etiqueta html accesible</h2>
+        <p >{{ etiqueAccesible }}</p>
+
+    </div>
+
+
+
+ 
+ <!-- CDN VUE JS -->
+ <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+ <script>
+    new Vue ({
+        el:'#app',
+        data:{
+            ancho:'100',
+            largo:'100',
+            categoria:'any',
+            isfiltro:'',
+            filtro:'',
+            url:'http://placeimg.com',
+            alt:'',
+
+        },
+        computed:{
+           urlCompleta(){
+                return `${this.url}/${this.largo}/${this.ancho}/${this.categoria}${this.isfiltro}${this.filtro}`
+            },
+           etiqueAccesible(){ 
+            return `<img alt="${this.alt}" src="${this.url}/${this.largo}/${this.ancho}/${this.categoria}${this.isfiltro}${this.filtro}">`
+           }
+        }
+    })
+
+
+/* Para que las dev.tool funcionen */
+Vue.config.devtools = true;
+ </script>
+
+
+
+</body>
+</html>
